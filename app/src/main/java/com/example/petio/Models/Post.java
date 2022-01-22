@@ -1,12 +1,13 @@
 package com.example.petio.Models;
 
 public class Post {
-    String description,url,useremail,postid;
+    public String description,url,useremail,postid,postcity;
 
-    public Post(String description, String url, String useremail, String postid) {
+    public Post(String description, String url, String useremail, String postid, String postcity) {
         this.description = description;
         this.url = url;
         this.useremail = useremail;
         this.postid = postid;
+        this.postcity = postcity;
     }
 }

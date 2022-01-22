@@ -1,11 +1,5 @@
 package com.example.petio.Views;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,6 +12,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.example.petio.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -83,7 +85,7 @@ public class AddPostActivity extends AppCompatActivity {
         });
 
         addPost.setOnClickListener(view -> {
-            if (imageData != null) {
+            if (imageData != null && !spinner.getSelectedItem().toString().equals("Bir Şehir Seçiniz")) {
 
                 UUID uuid = UUID.randomUUID();
                 String imageDataName = userEmail + "/" + uuid + ".jpg";
@@ -119,7 +121,7 @@ public class AddPostActivity extends AppCompatActivity {
                     });
                 }).addOnFailureListener(e -> Toast.makeText(AddPostActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show());
             } else {
-                Toast.makeText(AddPostActivity.this, "Görsel seçin.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddPostActivity.this, "Görsel - Şehir seçiniz.", Toast.LENGTH_SHORT).show();
             }
         });
 
