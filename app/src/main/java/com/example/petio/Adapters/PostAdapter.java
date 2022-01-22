@@ -48,7 +48,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         postHolder.postCity.setText(postcity);
         postHolder.userName.setText(useremail);
 
-
         Picasso.get().load(imageurl).into(postHolder.imageView);
     }
 

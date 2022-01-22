@@ -52,13 +52,14 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
 
         getPostData();
 
+        signOut.setOnClickListener(this);
+        addPost.setOnClickListener(this);
+        profile.setOnClickListener(this);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         postAdapter = new PostAdapter(postList,this);
         recyclerView.setAdapter(postAdapter);
 
-        signOut.setOnClickListener(this);
-        addPost.setOnClickListener(this);
-        profile.setOnClickListener(this);
         return view;
     }
 
@@ -67,21 +68,24 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
             if (value != null){
                 String city = value.getString("Sehir");
 
-                firebaseFirestore.collection("Posts").whereEqualTo("postcity",city).orderBy("date", Query.Direction.DESCENDING).addSnapshotListener((value1, error1) -> {
+                firebaseFirestore.collection("Posts").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener((value1, error1) -> {
                     if (value1 !=null){
-
+                        postList.clear();
                         for (DocumentSnapshot documentSnapshot: value1.getDocuments()){
-                            String imagedesc = documentSnapshot.getString("imagedesc");
-                            String imageurl = documentSnapshot.getString("imageurl");
-                            String useremail = documentSnapshot.getString("useremail");
                             String postcity = documentSnapshot.getString("postcity");
-                            String postid = documentSnapshot.getId();
+                            if (postcity.equals(city)){
+                                String imagedesc = documentSnapshot.getString("imagedesc");
+                                String imageurl = documentSnapshot.getString("imageurl");
+                                String useremail = documentSnapshot.getString("useremail");
 
-                            Post post = new Post(imagedesc,imageurl,useremail,postid,postcity);
-                            postList.add(post);
+                                String postid = documentSnapshot.getId();
 
+                                Post post = new Post(imagedesc,imageurl,useremail,postid,postcity);
+                                postList.add(post);
+                            }
                             postAdapter.notifyDataSetChanged();
                         }
+
                     }
                 });
             }
@@ -121,10 +125,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
         }
     }
 
-
-
     @Override
     public void onNoteClick(int position) {
-
+        Toast.makeText(getContext(),postList.get(position).postcity,Toast.LENGTH_SHORT).show();
     }
 }
