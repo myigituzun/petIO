@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.petio.Adapters.PostAdapter;
 import com.example.petio.Models.Post;
 import com.example.petio.R;
@@ -57,7 +55,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
         profile.setOnClickListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        postAdapter = new PostAdapter(postList,this);
+        postAdapter = new PostAdapter(postList,"all",this);
         recyclerView.setAdapter(postAdapter);
 
         return view;
@@ -114,6 +112,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
                 break;
             case R.id.profileButton:
                 intent = new Intent(view.getContext(), ProfileActivity.class);
+                intent.putExtra("email",email);
+                intent.putExtra("who","me");
                 startActivity(intent);
                 break;
             case R.id.addPostButton:
@@ -127,6 +127,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
 
     @Override
     public void onNoteClick(int position) {
-        Toast.makeText(getContext(),postList.get(position).postcity,Toast.LENGTH_SHORT).show();
+        intent = new Intent(getContext(), ProfileActivity.class);
+        intent.putExtra("email",postList.get(position).useremail);
+        intent.putExtra("who","other");
+        startActivity(intent);
     }
 }

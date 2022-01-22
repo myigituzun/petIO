@@ -1,18 +1,23 @@
 package com.example.petio.Adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.petio.Models.Post;
 import com.example.petio.R;
+import com.example.petio.Views.MainActivity;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,9 +26,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
     private ArrayList<Post> postList;
     private OnNoteListener mOnNoteListener;
+    private String who;
 
-    public PostAdapter(ArrayList<Post> postList,OnNoteListener onNoteListener) {
+    public PostAdapter(ArrayList<Post> postList,String who,OnNoteListener onNoteListener) {
         this.postList = postList;
+        this.who = who;
         this.mOnNoteListener = onNoteListener;
     }
 
@@ -43,12 +50,45 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         String imagedesc = postList.get(position).description;
         String useremail = postList.get(position).useremail;
         String postcity = postList.get(position).postcity;
+        String postid = postList.get(position).postid;
 
         postHolder.postDesc.setText(imagedesc);
         postHolder.postCity.setText(postcity);
-        postHolder.userName.setText(useremail);
-
         Picasso.get().load(imageurl).into(postHolder.imageView);
+
+        postHolder.firebaseFirestore.collection("Kullanicilar").document(useremail).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                String username = task.getResult().getString("KullaniciAdi");
+                postHolder.userName.setText(username);
+            }
+        });
+        if (who.equals("me")){
+            postHolder.menuButton.setOnClickListener(v -> {
+                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                MenuInflater inflater = popupMenu.getMenuInflater();
+                inflater.inflate(R.menu.item_menu, popupMenu.getMenu());
+                popupMenu.show();
+
+                popupMenu.setOnMenuItemClickListener(item -> {
+
+                    Snackbar.make(postHolder.menuButton, "Bu fotoğraf silinsin mi?", Snackbar.LENGTH_LONG)
+                            .setAction("Evet", v1 -> {
+                                postHolder.firebaseFirestore.collection("Posts").document(postid).delete().addOnSuccessListener(unused -> {
+                                    StorageReference storageReference = postHolder.firebaseStorage.getReferenceFromUrl(imageurl);
+                                    storageReference.delete().addOnSuccessListener(unused1 -> Toast.makeText(v1.getContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show());
+                                });
+                                if (getItemCount() == 0) {
+                                    Intent intent = new Intent(v1.getContext(), MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    v1.getContext().startActivity(intent);
+                                }
+                            }).show();
+                    return false;
+                });
+            });
+        }else {
+            postHolder.menuButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
