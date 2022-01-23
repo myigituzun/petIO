@@ -1,7 +1,5 @@
 package com.example.petio.Views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +7,9 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.petio.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -63,7 +64,8 @@ public class SignUpActivity extends AppCompatActivity {
                                             .addOnCompleteListener(SignUpActivity.this, task1 -> {
                                                 if (task1.isSuccessful()) {
                                                     Toast.makeText(SignUpActivity.this, "Kayıt işlemi başarılı.", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(intent);
                                                     finish();
                                                 } else {

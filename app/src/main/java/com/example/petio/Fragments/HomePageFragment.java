@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.petio.Adapters.PostAdapter;
 import com.example.petio.Models.Post;
 import com.example.petio.R;
@@ -103,8 +105,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
 
                     intent = new Intent(view.getContext(), LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                     getActivity().finish();
+                    startActivity(intent);
                 });
                 alert.setNegativeButton("Hayır", (dialog, which) -> {
                 });
@@ -129,7 +131,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
     public void onNoteClick(int position) {
         intent = new Intent(getContext(), ProfileActivity.class);
         intent.putExtra("email",postList.get(position).useremail);
-        intent.putExtra("who","other");
+        if (email.equals(postList.get(position).useremail)){
+            intent.putExtra("who","me");
+        }else {
+            intent.putExtra("who","other");
+        }
         startActivity(intent);
     }
 }
