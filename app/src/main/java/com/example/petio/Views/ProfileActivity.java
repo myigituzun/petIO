@@ -56,7 +56,10 @@ public class ProfileActivity extends AppCompatActivity implements PostAdapter.On
             if (who.equals("me")){
                 changeCity();
             }else {
-                followText.setText("Mesaj Gönder");
+                Intent intent1 = new Intent(ProfileActivity.this,ChatActivity.class);
+                intent1.putExtra("useremail",email);
+                intent1.putExtra("username",userNameText.getText().toString());
+                startActivity(intent1);
             }
         });
 

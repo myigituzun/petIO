@@ -1,7 +1,6 @@
 package com.example.petio.Views;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -42,7 +41,6 @@ public class AddPostActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ActivityResultLauncher<String> permissonLauncher;
     private String userEmail;
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +61,6 @@ public class AddPostActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-
-        dialog = new ProgressDialog(AddPostActivity.this);
 
         userEmail = firebaseAuth.getCurrentUser().getEmail();
 
@@ -89,9 +85,6 @@ public class AddPostActivity extends AppCompatActivity {
 
                 UUID uuid = UUID.randomUUID();
                 String imageDataName = userEmail + "/" + uuid + ".jpg";
-
-                dialog.setMessage("Görsel yükleniyor...");
-                dialog.show();
 
                 storageReference.child(imageDataName).putFile(imageData).addOnSuccessListener(taskSnapshot -> {
 
