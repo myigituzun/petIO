@@ -1,18 +1,17 @@
 package com.example.petio.Views;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.petio.Adapters.PostAdapter;
 import com.example.petio.Models.Post;
 import com.example.petio.R;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements PostAdapter.OnNoteListener {
     private TextView userNameText, cityText, followText, numberOfPostText;
-    private CardView followBtn;
     private String email, who;
     private FirebaseFirestore firebaseFirestore;
     private PostAdapter postAdapter;
@@ -40,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity implements PostAdapter.On
         followText = findViewById(R.id.followText);
         numberOfPostText = findViewById(R.id.profileNumberOfPostText);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        followBtn = findViewById(R.id.follow);
+        CardView followBtn = findViewById(R.id.follow);
         RecyclerView recyclerView = findViewById(R.id.profilRecyclerView);
 
         postList = new ArrayList<>();
@@ -68,6 +66,7 @@ public class ProfileActivity extends AppCompatActivity implements PostAdapter.On
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void getPostData() {
 
         firebaseFirestore.collection("Posts").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener((value, error1) -> {
@@ -75,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity implements PostAdapter.On
                 postList.clear();
                 for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     String useremail = documentSnapshot.getString("useremail");
+                    assert useremail != null;
                     if (useremail.equals(email)){
                         String postcity = documentSnapshot.getString("postcity");
                         String imagedesc = documentSnapshot.getString("imagedesc");

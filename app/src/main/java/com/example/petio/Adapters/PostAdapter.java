@@ -1,6 +1,5 @@
 package com.example.petio.Adapters;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -9,11 +8,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.petio.Models.Post;
 import com.example.petio.R;
-import com.example.petio.Views.MainActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -77,11 +77,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                                     StorageReference storageReference = postHolder.firebaseStorage.getReferenceFromUrl(imageurl);
                                     storageReference.delete().addOnSuccessListener(unused1 -> Toast.makeText(v1.getContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show());
                                 });
-                                if (getItemCount() == 0) {
-                                    Intent intent = new Intent(v1.getContext(), MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    v1.getContext().startActivity(intent);
-                                }
                             }).show();
                     return false;
                 });
