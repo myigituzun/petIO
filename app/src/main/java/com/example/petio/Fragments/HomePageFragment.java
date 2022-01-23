@@ -18,6 +18,7 @@ import com.example.petio.Adapters.PostAdapter;
 import com.example.petio.Models.Post;
 import com.example.petio.R;
 import com.example.petio.Views.AddPostActivity;
+import com.example.petio.Views.AllPostActivity;
 import com.example.petio.Views.LoginActivity;
 import com.example.petio.Views.ProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
         CardView signOut = view.findViewById(R.id.signout);
         CardView addPost = view.findViewById(R.id.addPostButton);
         CardView profile = view.findViewById(R.id.profileButton);
+        CardView allPost = view.findViewById(R.id.allPostButton);
         RecyclerView recyclerView = view.findViewById(R.id.homePageRecyclerView);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -54,10 +56,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
 
         signOut.setOnClickListener(this);
         addPost.setOnClickListener(this);
+        allPost.setOnClickListener(this);
         profile.setOnClickListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        postAdapter = new PostAdapter(postList,"all",this);
+        postAdapter = new PostAdapter(postList,"homePage",this);
         recyclerView.setAdapter(postAdapter);
 
         return view;
@@ -122,6 +125,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener,P
                 intent = new Intent(view.getContext(), AddPostActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.allPostButton:
+                intent = new Intent(view.getContext(), AllPostActivity.class);
+                startActivity(intent);
             default:
                 break;
         }

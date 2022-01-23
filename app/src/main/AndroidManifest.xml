@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetIO">
         <activity
+            android:name=".Views.AllPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.ChatActivity"
             android:exported="false" />
         <activity
