@@ -3,7 +3,6 @@ package com.example.petio.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -70,8 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
                                                     finish();
                                                 } else {
                                                     Toast.makeText(SignUpActivity.this, task1.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                                    Log.e("aaa",task1.getException().getMessage());
                                                 }
                                             });
 

@@ -54,6 +54,7 @@ public class ChatActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         meEmail = firebaseAuth.getCurrentUser().getEmail();
+
         getMeUsername();
         readMessage(meEmail, userEmail);
 

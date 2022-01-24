@@ -66,6 +66,7 @@ public class MessageFragment extends Fragment implements ChatListAdapter.OnNoteL
                     String useremail = documentSnapshot.getId();
 
                     ChatList chatListData = new ChatList(usermame, lastmessage);
+
                     chatLists.add(chatListData);
                     emailForChatActivity.add(useremail);
 
