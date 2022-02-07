@@ -8,10 +8,10 @@
 
 # Project Images
 
-![error!](https://github.com/myigituzun/petIO/blob/main/screenshots/ss1.png?raw=true) 
-![error!](https://github.com/myigituzun/petIO/blob/main/screenshots/ss2.png?raw=true)
-![error!](https://github.com/myigituzun/petIO/blob/main/screenshots/ss3.png?raw=true)
-![error!](https://github.com/myigituzun/petIO/blob/main/screenshots/ss4.png?raw=true)
-![error!](https://github.com/myigituzun/petIO/blob/main/screenshots/ss5.png?raw=true)
+![error!](https://github.com/myigituzun/petIO/blob/master/screenshots/ss1.png?raw=true) 
+![error!](https://github.com/myigituzun/petIO/blob/master/screenshots/ss2.png?raw=true)
+![error!](https://github.com/myigituzun/petIO/blob/master/screenshots/ss3.png?raw=true)
+![error!](https://github.com/myigituzun/petIO/blob/master/screenshots/ss4.png?raw=true)
+![error!](https://github.com/myigituzun/petIO/blob/master/screenshots/ss5.png?raw=true)
 
 # [my website](https://myigituzun.com/)
